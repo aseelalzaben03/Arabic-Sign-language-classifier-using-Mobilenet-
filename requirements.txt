@@ -3,3 +3,4 @@ tensorflow-cpu==2.11.0
 pillow
 requests
 gdown
+protobuf==3.19.6
