@@ -4,3 +4,5 @@ pillow
 requests
 gdown
 protobuf==3.19.6
+python-3.9
+
