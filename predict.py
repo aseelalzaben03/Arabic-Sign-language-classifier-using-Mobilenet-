@@ -4,20 +4,20 @@ from PIL import Image
 import tensorflow as tf
 import requests
 
-# Google Drive direct download URL
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1Hn5BId7M-8B8FPwRAYO6mSwk-2xdwOlc"
+import os
+import gdown
+import tensorflow as tf
+
+MODEL_URL = "https://drive.google.com/uc?id=1Hn5BId7M-8B8FPwRAYO6mSwk-2xdwOlc"
 MODEL_PATH = "final_finetuned_model_updated.keras"
 
-# Download the model if it doesn't exist
 if not os.path.exists(MODEL_PATH):
-    print("Downloading model from Google Drive...")
-    response = requests.get(MODEL_URL)
-    with open(MODEL_PATH, "wb") as f:
-        f.write(response.content)
-    print("Model downloaded successfully.")
+    print("Downloading model from Google Drive using gdown...")
+    gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+    print("Download complete.")
 
-# Load the model
 model = tf.keras.models.load_model(MODEL_PATH)
+
 
 # Class labels (must match the training order)
 classes = [
