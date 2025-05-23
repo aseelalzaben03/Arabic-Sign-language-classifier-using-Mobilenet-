@@ -28,7 +28,7 @@ if not os.path.exists(MODEL_DIR):
     print("✅ Extraction complete.")
 
 print("🔄 Loading model...")
-model = tf.keras.models.load_model(MODEL_DIR, compile=False)
+model = tf.keras.models.load_model(MODEL_DIR)
 print("✅ Model loaded successfully.")
 
 # الأصناف (Labels)
