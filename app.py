@@ -2,34 +2,25 @@ import streamlit as st
 from PIL import Image
 from predict import predict_image
 
-# Page configuration
 st.set_page_config(
     page_title="AI-ISHARAH",
     page_icon="🤟",
     layout="centered"
 )
 
-# App title and description
 st.title("📸 AI-ISHARAH .... Arabic Sign Language Letter Recognition")
-st.markdown(
-    """
-    👋 Welcome to **AI-ISHARAH **!  
-    Upload an image of a hand sign and we will predict the corresponding Arabic letter.  
-    ---
-    """
-)
+st.markdown("""
+👋 Welcome to **AI-ISHARAH**!  
+Upload an image of a hand sign and we will predict the corresponding Arabic letter.  
+---
+""")
 
-# Image upload section
 uploaded_file = st.file_uploader("📤 Upload an image (PNG or JPG)", type=["png", "jpg", "jpeg"])
 
-# When an image is uploaded
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
-    
-    # Display the uploaded image
     st.image(image, caption="📷 This is the uploaded image", use_column_width=True)
 
-    # Predict button
     if st.button("🔍 Recognize Letter"):
         with st.spinner("⏳ Predicting..."):
             try:
@@ -39,4 +30,5 @@ if uploaded_file is not None:
                 st.error("❌ An error occurred during prediction. Please check the image or the model.")
                 st.exception(e)
 else:
-    st.info("👈 Please upload an image to get started.")
+    st.info("👈 Please upload an image to get started")
+
