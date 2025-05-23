@@ -10,8 +10,9 @@ import zipfile
 import requests
 import tensorflow as tf
 
-MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/saved_modellllll.zip"
-ZIP_PATH = "saved_modellllll.zip"
+MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/aseel_saved_model.zip"
+
+ZIP_PATH = "aseel_saved_model.zip"
 MODEL_DIR = "saved_model.pb"
 
 if not os.path.exists(MODEL_DIR):
