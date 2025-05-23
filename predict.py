@@ -5,36 +5,30 @@ import tensorflow as tf
 import requests
 import zipfile
 
-# رابط ملف zip لموديل saved_model على Hugging Face
+import os
+import zipfile
+import requests
+import tensorflow as tf
+
 MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/saved_model.zip"
-
-# اسم ملف zip اللي بننزله
 ZIP_PATH = "saved_model.zip"
+MODEL_DIR = "saved_model"
 
-# اسم مجلد الموديل بعد فك الضغط
-MODEL_PATH = "saved_model"
-
-# لو المجلد مش موجود، ننزل الملف ونفك الضغط
-if not os.path.exists(MODEL_PATH):
-    print("⬇️ Downloading model from Hugging Face...")
+if not os.path.exists(MODEL_DIR):
+    print("⬇️ Downloading zipped model...")
     r = requests.get(MODEL_URL)
     with open(ZIP_PATH, 'wb') as f:
         f.write(r.content)
-    print("✅ Download complete, extracting now...")
+    print("✅ Download complete.")
+    
+    print("📂 Extracting model...")
     with zipfile.ZipFile(ZIP_PATH, 'r') as zip_ref:
-        zip_ref.extractall(MODEL_PATH)
-    print("✅ Extraction done.")
-else:
-    print("Model folder already exists, skipping download.")
+        zip_ref.extractall(MODEL_DIR)
+    print("✅ Extraction complete.")
 
-# تحميل الموديل
-print("🔄 Loading the model...")
-try:
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-    print("✅ Model loaded successfully.")
-except Exception as e:
-    print("❌ Error loading model:", e)
-    raise e
+print("🔄 Loading model...")
+model = tf.keras.models.load_model(MODEL_DIR, compile=False)
+print("✅ Model loaded successfully.")
 
 # الأصناف (Labels)
 classes = [
