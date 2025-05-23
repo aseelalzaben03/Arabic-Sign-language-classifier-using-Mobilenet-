@@ -11,7 +11,6 @@ VARIABLES_ZIP_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/
 
 # مسارات الحفظ المحلي
 MODEL_DIR = "saved_model"
-VARIABLES_DIR = os.path.join(MODEL_DIR, "variables")
 PB_PATH = os.path.join(MODEL_DIR, "saved_model.pb")
 ZIP_PATH = "variables.zip"
 
@@ -23,15 +22,16 @@ if not os.path.exists(PB_PATH):
         f.write(requests.get(PB_URL).content)
     print("✅ saved_model.pb downloaded.")
 
-# تحميل variables.zip وفك الضغط إن لم تكن موجودة
-if not os.path.exists(VARIABLES_DIR):
+# تحميل variables.zip وفك الضغط إن لم يكن موجودًا
+variables_folder = os.path.join(MODEL_DIR, "variables")
+if not os.path.exists(variables_folder):
     print("⬇️ Downloading variables.zip...")
     with open(ZIP_PATH, 'wb') as f:
         f.write(requests.get(VARIABLES_ZIP_URL).content)
 
     print("📂 Extracting variables.zip...")
     with zipfile.ZipFile(ZIP_PATH, 'r') as zip_ref:
-        zip_ref.extractall(VARIABLES_DIR)
+        zip_ref.extractall(MODEL_DIR)  # ← التعديل هنا
     print("✅ variables extracted.")
 
 # تحميل الموديل
