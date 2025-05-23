@@ -6,7 +6,7 @@ from huggingface_hub import hf_hub_download
 
 # Load model from Hugging Face Hub using token from environment
 REPO_ID = "Aseelalzaben03/arabic-sign-language"
-MODEL_FILENAME = "final_finetuned_mode_updated.keras"
+MODEL_FILENAME = "final_finetuned_model_updated.keras"
 HF_TOKEN = os.getenv("HF_TOKEN")  # Token from Streamlit secrets
 
 # Download model file
