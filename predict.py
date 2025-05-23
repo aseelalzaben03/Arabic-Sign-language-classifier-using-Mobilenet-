@@ -7,7 +7,6 @@ import numpy as np
 MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/final_finetuned_mode_updated.keras"
 MODEL_PATH = "final_finetuned_mode_updated.keras"
 
-# تحميل الموديل إذا مش موجود محلياً
 if not os.path.exists(MODEL_PATH):
     print("⬇️ Downloading model from Hugging Face...")
     r = requests.get(MODEL_URL)
@@ -31,6 +30,4 @@ def predict_image(image: Image.Image) -> str:
     image = np.expand_dims(image, axis=0)
     prediction = model.predict(image)
     predicted_index = np.argmax(prediction)
-    predicted_label = classes[predicted_index]
-    return predicted_label
-
+    return classes[predicted_index]
