@@ -8,7 +8,8 @@ from huggingface_hub import hf_hub_download
 print(f"📁 Current working directory: {os.getcwd()}")
 
 # Model file name inside the Hugging Face repo
-MODEL_FILENAME = "final_finetuned_model_updated.keras"
+MODEL_FILENAME = "final_finetuned_mode_updated.keras"  # Correct filename from Hugging Face repo
+
 
 # Local path where the model will be saved/downloaded
 MODEL_PATH = MODEL_FILENAME
