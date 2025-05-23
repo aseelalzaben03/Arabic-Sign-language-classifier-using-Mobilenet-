@@ -13,7 +13,7 @@ import tensorflow as tf
 MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/aseel_saved_model.zip"
 
 ZIP_PATH = "aseel_saved_model.zip"
-MODEL_DIR = "saved_model.pb"
+MODEL_DIR = "saved_model"
 
 if not os.path.exists(MODEL_DIR):
     print("⬇️ Downloading zipped model...")
