@@ -46,11 +46,22 @@ classes = [
     'Seen', 'Sheen', 'Tah', 'Teh', 'Teh_Marbuta', 'Thal', 'Theh', 'Waw', 'Yeh', 'Zah', 'Zain'
 ]
 
-# دالة التنبؤ بالصورة
+# تحميل توقيع التنبؤ
+predict_fn = model.signatures["serving_default"]
+
+# دالة التنبؤ بالصورة باستخدام التوقيع
 def predict_image(image: Image.Image) -> str:
     image = image.resize((224, 224))
     image = np.array(image) / 255.0
     image = np.expand_dims(image, axis=0)
-    prediction = model.predict(image)
-    predicted_index = np.argmax(prediction)
+    image_tensor = tf.convert_to_tensor(image, dtype=tf.float32)
+
+    # التنبؤ باستخدام التوقيع
+    output = predict_fn(image_tensor)
+
+    # استخراج اسم المخرجات من التوقيع
+    output_values = list(output.values())
+    prediction_array = output_values[0].numpy()
+    predicted_index = np.argmax(prediction_array)
+
     return classes[predicted_index]
