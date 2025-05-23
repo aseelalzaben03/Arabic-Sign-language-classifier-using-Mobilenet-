@@ -18,9 +18,14 @@ if not os.path.exists(MODEL_PATH):
     else:
         print("❌ Model download failed!")
 
-model = tf.keras.models.load_model(MODEL_PATH)
+print("🔄 Loading the model...")
+try:
+    model = tf.keras.models.load_model(MODEL_PATH)
+    print("✅ Model loaded successfully.")
+except Exception as e:
+    print("❌ Error loading model:", e)
+    raise e
 
-# Classes list
 classes = [
     'Ain', 'Al', 'Alef', 'Beh', 'Dad', 'Dal', 'Feh', 'Ghain', 'Hah', 'Heh',
     'Jeem', 'Kaf', 'Khah', 'Laa', 'Lam', 'Meem', 'Noon', 'Qaf', 'Reh', 'Sad',
