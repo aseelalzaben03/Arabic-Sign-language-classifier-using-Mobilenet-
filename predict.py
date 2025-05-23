@@ -2,38 +2,41 @@ import os
 import numpy as np
 from PIL import Image
 import tensorflow as tf
-from huggingface_hub import hf_hub_download
+import requests
 
-# Load model from Hugging Face Hub using token from environment
-REPO_ID = "Aseelalzaben03/arabic-sign-language"
-MODEL_FILENAME = "final_model.keras"
-HF_TOKEN = os.getenv("HF_TOKEN")  # Token from Streamlit secrets
+MODEL_URL = "https://huggingface.co/Aseelalzaben03/arabic-sign-language/resolve/main/final_model.keras"
+MODEL_PATH = "final_model.keras"
 
-# Download model file
-MODEL_PATH = hf_hub_download(
-    repo_id=REPO_ID,
-    filename=MODEL_FILENAME,
-    token=HF_TOKEN
-)
+if not os.path.exists(MODEL_PATH):
+    print("⬇️ Downloading model from Hugging Face...")
+    r = requests.get(MODEL_URL)
+    with open(MODEL_PATH, 'wb') as f:
+        f.write(r.content)
+    if os.path.exists(MODEL_PATH):
+        print("✅ Model downloaded successfully.")
+        print(f"Model file size: {os.path.getsize(MODEL_PATH)} bytes")
+    else:
+        print("❌ Model download failed!")
 
-# Load the model
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# Class labels (must match the training order)
+# Classes list
 classes = [
     'Ain', 'Al', 'Alef', 'Beh', 'Dad', 'Dal', 'Feh', 'Ghain', 'Hah', 'Heh',
     'Jeem', 'Kaf', 'Khah', 'Laa', 'Lam', 'Meem', 'Noon', 'Qaf', 'Reh', 'Sad',
     'Seen', 'Sheen', 'Tah', 'Teh', 'Teh_Marbuta', 'Thal', 'Theh', 'Waw', 'Yeh', 'Zah', 'Zain'
 ]
 
-# Prediction function
 def predict_image(image: Image.Image) -> str:
-    image = image.resize((224, 224))  # Resize image to match model input
-    image = np.array(image) / 255.0   # Normalize pixel values
-    image = np.expand_dims(image, axis=0)  # Add batch dimension
+    image = image.resize((224, 224))
+    image = np.array(image) / 255.0
+    image = np.expand_dims(image, axis=0)
 
-    prediction = model.predict(image)  # Run prediction
+    prediction = model.predict(image)
     predicted_index = np.argmax(prediction)
     predicted_label = classes[predicted_index]
 
     return predicted_label
+
+
+
